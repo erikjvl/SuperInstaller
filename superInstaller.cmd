@@ -1,3 +1,4 @@
+rem version 2017.10.05
 @echo off
 cls
 echo.
@@ -20,7 +21,7 @@ echo.
 echo.
 
 rem Install or update the choco tool. Details: https://chocolatey.org/
-powershell -NoProfile -ExecutionPolicy unrestricted -Command "iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))" && SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin 
+@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
 
  
 rem The next lines will:
@@ -31,7 +32,6 @@ rem
 rem Parameters    :Package name                   , Start menu group , Shortcut to copy        , Start menu group to remove        
  
 rem Common Packages
-call:superInstall  "cmder"                        ,"Tools"           ,"cmder"                  ,"cmder"
 call:superInstall  "ditto"                        ,"Tools"           ,"ditto"                  ,"ditto"
 call:superInstall  "adobereader"                  ,"Tools"           ,"Adobe Reader"           ,"Adobe Reader XI"
 call:superInstall  "Teamviewer"                   ,"Tools"           ,"TeamViewer"             ,"TeamViewer 10"
@@ -46,21 +46,19 @@ call:superInstall  "notepadplusplus"              ,"Tools"           ,"notepad++
 
 
 rem Multimedia
-call:superInstall  "lame-front-end"               ,"Tools"           ,"Lame Front-End"         ,"Lame Front-End"
 call:superInstall  "vlc"                          ,"Tools"           ,"VideoLAN"               ,"VLC media player"
 call:superInstall  "quicktime"                    ,"Tools"           ,"Quicktime"              ,"Quicktime player"
 call:superInstall  "handbrake.install"            ,"Tools"           ,"Handbrake"              ,"Handbrake"
 call:superInstall  "mp3tag"                       ,"Tools"           ,"Mp3tag"                 ,"Mp3tag"
-call:superInstall  "XBMC"                         ,"Tools"           ,"XBMC"                   ,"XBMC"
 call:superInstall  "paint.net"                    ,"Tools"           ,"Paint.net"              ,"Paint.net"
 
 
 rem For powerusers and developers only
-call:superInstall  "SublimeText3.PackageControl"  ,"Tools"           ,"Sublime Text 3"         ,"N/A" 
 call:superInstall  "filezilla"                    ,"Tools"           ,"Filezilla FTP Client"   ,"Filezilla"
 call:superInstall  "GoogleChrome.Canary"          ,"Tools"           ,"Google Chrome Canary"   ,"Google Chrome Canary" 
 call:superInstall  "zoomit"                       ,"Tools"           ,"NA"                     ,"N/A"
 call:superInstall  "putty.install"                ,"Tools"           ,"NA"                     ,"N/A"
+call:superInstall  "visualstudiocode"             ,"Tools"           ,"NA"                     ,"N/A"
 
 
 rem Package with still some userinteraction
@@ -102,7 +100,7 @@ set         startDisplayname=%~4
 echo.%instName%
 echo.
 
-cinst       %instName%
+choco "install %instName% -y"
 
 set         allUsersStart=C:\Users\All Users\Microsoft\Windows\Start Menu\Programs
 set         destDir=%allUsersStart%\%startGroup%
